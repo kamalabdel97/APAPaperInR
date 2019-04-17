@@ -1,0 +1,195 @@
+\documentclass[man]{apa6}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={The Sound of Intellect: Speech Reveals a Thoughtful Mind, Increasing a Job Candidate's Appeal},
+            pdfauthor={Kamal Abdelrahman},
+            pdfkeywords={replication, R, employment, communication},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+
+  \title{The Sound of Intellect: Speech Reveals a Thoughtful Mind, Increasing a
+Job Candidate's Appeal}
+    \author{Kamal Abdelrahman\textsuperscript{1}}
+    \date{}
+  
+\shorttitle{Speech Increases a Job Candidate’s Appeal}
+\affiliation{
+\vspace{0.5cm}
+\textsuperscript{1} City University of New York - Brooklyn College}
+\keywords{replication, R, employment, communication\newline\indent Word count: X}
+\usepackage{csquotes}
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage[flushleft]{threeparttable}
+\usepackage{threeparttablex}
+
+\newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
+
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
+
+\authornote{Kamal Abdelrahman is an undergraduate at the City
+University of New York - Brooklyn College in Brooklyn, NY majoring in
+psychology with a focus in statistical programming
+
+Correspondence concerning this article should be addressed to Kamal
+Abdelrahman, Postal address. E-mail:
+\href{mailto:kamalabdel97@gmail.com}{\nolinkurl{kamalabdel97@gmail.com}}}
+
+\abstract{
+This study is an exact replication of Juliana Schroeder \& Nicholas
+Epley's (2015) experiment of whether a potential job candidate is
+percieved more intelligent through text or audio. 39 Forturne 500
+company recruiters rated job candidates on their intellect, a composite
+score of the candidate's intelligence, competence, and thoughtfulness.
+They hypothesized that speech communicates intelligence better than
+written words. This study recreated the analysis of regarding
+presenation of pitches and their favorability. Analysis supported that
+hypothesis.
+
+
+}
+
+\begin{document}
+\maketitle
+
+\section{Methods}\label{methods}
+
+\emph{Participants}
+
+In this study, there were 39 participants, all professional Fortune 500
+recruiters. The average of the recruiters was \emph{M} = 30.85
+(\emph{SD} = -6.24). 10.3\% of the participants are male and 76.9\% are
+female.
+
+\emph{Materials}
+
+Two materials were used in this analysis. The first material was the
+dataset used in Schroeder \& Epley's study from githhub. The data was
+analyzed so that the t-test could be reproduced.
+
+The second material was R Studio, the Integrated Development Environemnt
+(IDE) for R. The IDE was used as a platform to analyze the dataset in R.
+
+\emph{Procedure}
+
+To recreate this analysis of the t-test, the following steps were taken.
+First, the data was loaded into R from Github with the fread function
+from the data.table library. Then, a difference\\
+The data was retrieved from (website) and loaded into into a R via the
+fread function available under the data.table library () The data
+
+\section{Results}\label{results}
+
+An independent samples t-test was conducted to examine the manipulation
+effects of audio and written expressions of intelligence in potential
+employees. Interviewees who expressed their intelligence through spokem
+during their interviews were rated significantly better (\emph{M} =
+6.43, \emph{SD} = 1.43) than interviewees who wrote out their responses
+(\emph{M} = 4.39, \emph{SD} = 2.17) \(t(34.02) = -2.17\), \(p = .037\),
+\(d_{s}\) = -1.13
+
+\section{Discussion}\label{discussion}
+
+Schroeder and Epley hypothesized that a person is a more appealing job
+candidate if they communicated with their voice as opposed to with text.
+Results supported this hypothesis, which stated that candidates who
+communicated through audio were rated significantly more desirable than
+canidates who did not. This analysis was consistent across all five
+experiments that were conducted. This is consistent with other
+literature that discusses
+
+\newpage
+
+\emph{Limitations} The overall findings of the study indicated that
+candidates who communicated through audio as opposed to written text
+were rated significantly more intelligent. Though, after reexamining the
+
+\emph{Implications} The study explored the effects of various
+communication methods in regards to a person's desirability. This has
+potential for various avenues to be explored within the realm of
+communication.
+
+\section{References}\label{references}
+
+\begingroup
+\setlength{\parindent}{-0.5in} \setlength{\leftskip}{0.5in}
+
+\hypertarget{refs}{}
+
+\endgroup
+
+
+\end{document}
