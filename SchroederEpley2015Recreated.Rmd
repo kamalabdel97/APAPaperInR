@@ -31,7 +31,7 @@ bibliography      : ["r-references.bib"]
 
 floatsintext      : no
 figurelist        : no
-tablelist         : no
+tablelist         : yes
 footnotelist      : no
 linenumbers       : no
 mask              : no
@@ -42,12 +42,18 @@ classoption       : "man"
 output            : papaja::apa6_pdf
 ---
 
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
+
 ```{r setup, include = FALSE}
 library(papaja)
 library(data.table)
 library(MOTE)
 library(scales)
 library(ggplot2)
+library(dplyr)
+library(knitr)
 SmarterTalkerSpeaker<-fread("https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv")
 SmarterTalkerSpeaker$gender <- as.factor(SmarterTalkerSpeaker$gender)
 SmarterTalkerSpeaker$CONDITION <- as.factor(SmarterTalkerSpeaker$CONDITION)
@@ -60,8 +66,6 @@ SmarterTalkerSpeaker$CONDITION <- as.factor(SmarterTalkerSpeaker$CONDITION)
 set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
-
-
 
 # Methods
 
@@ -94,6 +98,31 @@ effectsize
 ```
 
 An independent samples t-test was conducted to examine the manipulation effects of audio and written expressions of intelligence in potential employees. Interviewees who expressed their intelligence through spokem during their interviews were rated significantly better (*M* = `r mean(SmarterTalkerSpeaker$intell[SmarterTalkerSpeaker$CONDITION == 1])`, *SD* = `r sd(SmarterTalkerSpeaker$intell[SmarterTalkerSpeaker$CONDITION == 1])`) than interviewees who wrote out their responses (*M* = `r mean(SmarterTalkerSpeaker$intell[SmarterTalkerSpeaker$CONDITION == 0])`, *SD* = `r sd(SmarterTalkerSpeaker$intell[SmarterTalkerSpeaker$CONDITION == 0])`) `r apa_print(ConditionTTest)$statistic`, $d_{s}$ = `r apa(effectsize$d,2,T)`
+
+```{r, include=FALSE}
+descriptives_df <- SmarterTalkerSpeaker %>% group_by(CONDITION) %>%
+  summarize(Mean = mean(intellect),
+   Median = median(intellect), 
+   SD = sd(intellect)
+   )
+
+descriptives_df[, -1] <- printnum(descriptives_df[, -1])
+
+
+
+# kable(descriptives_df, "latex", caption = "Mean Reaction Times and Standard Errors of the Mean for Experiment 3", booktabs = T) %>%
+#   kable_styling() %>%
+#   add_header_above(c(" " = 1, "Congruent" = 2, "Incongruent" = 2))
+```
+
+```{r, results="asis", eval=TRUE}
+apa_table(descriptives_df,
+  caption = "Descriptive statistics of correct recall by dosage."
+  , note = "This table was created with apa_table()")
+```
+
+
+
 
 # Discussion
 Schroeder and Epley hypothesized that a person is a more appealing job candidate if they communicated with their voice as opposed to with text. Results supported this hypothesis, which stated that candidates who communicated through audio were rated significantly more desirable than canidates who did not. This analysis was consistent across all five experiments that were conducted. This is consistent with other literature that discusses  

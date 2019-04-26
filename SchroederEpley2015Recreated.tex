@@ -99,6 +99,13 @@ Job Candidate's Appeal}
 \makeatletter
 \renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
 \makeatother
+\usepackage[titles]{tocloft}
+\cftpagenumbersoff{table}
+\renewcommand{\cfttabpresnum}{\itshape\tablename\enspace}
+\renewcommand{\cfttabaftersnum}{.\space}
+\setlength{\cfttabindent}{0pt}
+\setlength{\cftafterloftitleskip}{0pt}
+\settowidth{\cfttabnumwidth}{Table 10.\qquad}
 
 \authornote{Kamal Abdelrahman is an undergraduate at the City
 University of New York - Brooklyn College in Brooklyn, NY majoring in
@@ -161,6 +168,26 @@ during their interviews were rated significantly better (\emph{M} =
 (\emph{M} = 4.39, \emph{SD} = 2.17) \(t(34.02) = -2.17\), \(p = .037\),
 \(d_{s}\) = -1.13
 
+\begin{table}[tbp]
+\begin{center}
+\begin{threeparttable}
+\caption{\label{tab:unnamed-chunk-4}Descriptive statistics of correct recall by dosage.}
+\begin{tabular}{llll}
+\toprule
+CONDITION & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{Median} & \multicolumn{1}{c}{SD}\\
+\midrule
+0 & 4.65 & 4.67 & 1.91\\
+1 & 6.63 & 6.67 & 1.61\\
+\bottomrule
+\addlinespace
+\end{tabular}
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} This table was created with apa\_table()}
+\end{tablenotes}
+\end{threeparttable}
+\end{center}
+\end{table}
+
 \section{Discussion}\label{discussion}
 
 Schroeder and Epley hypothesized that a person is a more appealing job
@@ -190,6 +217,12 @@ communication.
 \hypertarget{refs}{}
 
 \endgroup
+
+\clearpage
+
+\renewcommand{\listtablename}{Table captions}
+
+\listoftables
 
 
 \end{document}
