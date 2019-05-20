@@ -1,0 +1,207 @@
+---
+title             : "The Sound of Intellect: Speech Reveals a Thoughtful Mind, Increasing a Job Candidate’s Appeal"
+shorttitle        : "Speech Increases a Job Candidate’s Appeal"
+
+author: 
+  - name          : "Kamal Abdelrahman"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Brooklyn, NY"
+    email         : "kamalabdel97@gmail.com"
+
+affiliation:
+  - id            : "1"
+    institution   : "City University of New York - Brooklyn College"
+
+authornote: |
+  Kamal Abdelrahman is an undergraduate at the City University of New York - Brooklyn College in Brooklyn, NY majoring in psychology with a focus in statistical programming.
+
+
+abstract: |
+ This study is an exact replication of Juliana Schroeder & Nicholas Epley's (2015) experiment of whether a potential job candidate is percieved more intelligent through text or audio. 39 Forturne 500 company recruiters rated job candidates on their intellect, a composite score of the candidate's intelligence, competence, and thoughtfulness. They hypothesized that speech communicates intelligence better than written words. This study recreated the analysis of regarding presenation of pitches and their favorability. Analysis supported that hypothesis.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "keywords"
+wordcount         : "X" 
+
+bibliography      : ["r-references.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : no
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed, warning = FALSE, message=FALSE,
+  echo = FALSE)
+```
+
+
+
+```{r, echo=FALSE}
+library(papaja)
+library(data.table)
+library(MOTE)
+library(scales)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+
+SmarterTalkerSpeaker<-fread("https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv")
+
+SmarterTalkerSpeaker$gender <- as.factor(SmarterTalkerSpeaker$gender)
+SmarterTalkerSpeaker$CONDITION <- as.integer(SmarterTalkerSpeaker$CONDITION)
+
+SmarterTalkerSpeaker$CONDITION <- as.factor(SmarterTalkerSpeaker$CONDITION)
+
+levels(SmarterTalkerSpeaker$CONDITION) <- c("Transcript", "Audio")
+
+
+SmarterTalkerSpeaker[SmarterTalkerSpeaker$CONDITION == "0"] <- "Audio"
+```
+
+
+
+# Introduction
+
+An interview is a key moment in every job applicant's hiring process, as it provides the opportunity for the hiring manager and the interviewee to discuss a potential match within the company. For the interviewer, it's about picking the right candidate. For the interviewee, it's about picking the right style of presentation. Schroeder & Epley [-@schroeder2015sound] bring this into question with their study, in which they investigate the effects of audio and written presentations in an interview.  
+
+# Methods
+
+*Participants*
+
+In this study, there were `r (NROW(SmarterTalkerSpeaker))` participants, all professional Fortune 500 recruiters. The average of age the recruiters was *M* = `r mean(SmarterTalkerSpeaker$age, na.rm = T)` (*SD* = `r (sd(SmarterTalkerSpeaker$age, na.rm = T)) `). `r scales:: percent(length(which(SmarterTalkerSpeaker$gender == 1))/length(SmarterTalkerSpeaker$gender))` of the participants are male and `r scales:: percent(length(which(SmarterTalkerSpeaker$gender == 2))/length(SmarterTalkerSpeaker$gender))` are female. 
+
+*Materials*
+
+Two materials were used in this analysis. The first material was the dataset used in Schroeder & Epley's study from githhub. The dataset could be accessed [here]("https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv") The data was analyzed so that the t-test could be reproduced. 
+
+The second material was R Studio, the Integrated Development Environemnt (IDE) for R. The IDE was used as a platform to analyze the dataset in R. 
+
+
+\newpage
+*Procedure*
+
+To recreate this analysis of the t-test the data was loaded into R from [Github]("https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv") with the *fread* function of the data.table library [@R-data.table]. 
+
+
+# Results
+```{r, include=FALSE}
+#T-Test
+ConditionTTest <- t.test(SmarterTalkerSpeaker$Intellect_Rating ~ SmarterTalkerSpeaker$CONDITION, var.equal = T)
+
+M <- tapply(SmarterTalkerSpeaker$intell, SmarterTalkerSpeaker$CONDITION, mean)
+stdev <- tapply(SmarterTalkerSpeaker$intell, SmarterTalkerSpeaker$CONDITION, sd)
+N <- tapply(SmarterTalkerSpeaker$intell, SmarterTalkerSpeaker$CONDITION, length)
+effectsize <- d.ind.t(M[1], M[2], stdev[1], stdev[2], N[1], N[2])
+effectsize
+
+
+```
+
+An independent samples t-test was conducted to examine the manipulation effects of audio and written expressions of intelligence in potential employees. Interviewees who expressed their intelligence through spokem during their interviews were rated significantly better (*M* = `r mean(SmarterTalkerSpeaker$intell[SmarterTalkerSpeaker$CONDITION == "Audio"], na.rm = T)`, *SD* = `r sd(SmarterTalkerSpeaker$intell[SmarterTalkerSpeaker$CONDITION == "Audio"], na.rm = T)`) than interviewees who wrote out their responses (*M* = `r mean(SmarterTalkerSpeaker$intell[SmarterTalkerSpeaker$CONDITION == "Transcript"], na.rm = T)`, *SD* = `r sd(SmarterTalkerSpeaker$intell[SmarterTalkerSpeaker$CONDITION == "Transcript"], na.rm = T)`) `r apa_print(ConditionTTest)$statistic`, $d_{s}$ = `r apa(effectsize$d,2,T)`
+
+
+```{r ,echo=FALSE,fig.cap="The average intelligence rating of potential hires based on whether they presented themselves through audio or transcript."}
+
+library(dplyr)
+library(ggplot2)
+
+# get means and SEs
+descriptive_df <- SmarterTalkerSpeaker %>%
+                    group_by(CONDITION) %>%
+                    summarise(means= mean(Intellect_Rating),
+                              SEs = sd(Intellect_Rating)/sqrt(length(Intellect_Rating)))
+
+```
+
+
+```{r f1, echo=FALSE, fig.cap="THE"}
+
+# Make the plot
+ggplot(data = descriptive_df, aes(x=CONDITION, y=means, fill=as.factor(CONDITION)))+ 
+  geom_bar(stat="identity")+ # add means
+  geom_errorbar(aes(ymin=means-SEs,               # add error bars
+                    ymax=means+SEs), width=.1) +
+ #scale_fill_hue()+
+ labs(x = "Condition", y = "Intellectual Rating", title = "Intelligence Rating of Interviewees") +
+ theme_apa() +
+ theme(legend.position = "none")
+```
+
+
+
+
+```{r rt, echo=FALSE, results="asis"}
+
+apadata <- SmarterTalkerSpeaker %>% group_by(CONDITION) %>%
+  summarize(Mean = mean(intellect),
+   SD = sd(intellect)
+   )
+
+apadata[, -1] <- printnum(apadata[, -1])
+
+apa_table(apadata,
+  caption = "Descriptive statistics of intellectual ratings by presentation method.")
+```
+
+# Discussion
+Schroeder and Epley hypothesized that a person is a more appealing job candidate if they communicated with their voice as opposed to with text. Results supported this hypothesis, which stated that candidates who communicated through audio were rated significantly more desirable than canidates who did not. This analysis was consistent across all five experiments that were conducted. This aligns well with other studies which have focused on speech style, particuarly that interviewees who spoke more powerfully were rated positively for competence and employability [@parton2002employment] This study could further build on their findings to identify the effects of tone pitch on likeability.
+
+# Simulation
+```{r}
+# function to run a simulated t-test
+sim_power <- function(x){
+  A <- rnorm(n=30,mean=0, sd=1)
+  B <- rnorm(n=30,mean=(0+x), sd=1)
+  return(t.test(A,B,var.equal=TRUE)$p.value)
+}
+# vector of effect sizes
+effect_sizes <- seq(.1,2,.1)
+# run simulation for each effect size 1000 times
+power <- sapply(effect_sizes, 
+          FUN = function(x) {
+            sims <- replicate(1000,sim_power(x))
+            sim_power <- length(sims[sims<.05])/length(sims)
+            return(sim_power)})
+# combine into dataframe
+plot_df <- data.frame(effect_sizes,power)
+# plot the power curve
+ggplot(plot_df, aes(x=effect_sizes,
+                    y=power))+
+  geom_point()+
+  geom_line()
+```
+
+
+```
+
+
+\newpage
+
+# References
+```{r create_r-references}
+r_refs(file = "r-references.bib")
+```
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id = "refs"></div>
+\endgroup

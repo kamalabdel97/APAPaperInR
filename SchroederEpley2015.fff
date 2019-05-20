@@ -1,0 +1,7 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{SchroederEpley2015_files/figure-latex/f1-1.pdf}
+\caption{\label{fig:f1}THE}
+\end{figure*}

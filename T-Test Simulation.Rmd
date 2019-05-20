@@ -1,0 +1,31 @@
+---
+title: "T-Test Simulation"
+author: "Kamal Abdelrahman"
+output: html_document
+---
+
+```{r}
+
+library(ggplot2)
+# function to run a simulated t-test
+sim_power <- function(x){
+  A <- rnorm(n=39,mean=0, sd=1)
+  B <- rnorm(n=39,mean=(0+x), sd=1)
+  return(t.test(A,B,var.equal=TRUE)$p.value)
+}
+# vector of effect sizes
+effect_sizes <- seq(.1,2,.1)
+# run simulation for each effect size 1000 times
+power <- sapply(effect_sizes, 
+          FUN = function(x) {
+            sims <- replicate(1000,sim_power(x))
+            sim_power <- length(sims[sims<.05])/length(sims)
+            return(sim_power)})
+# combine into dataframe
+plot_df <- data.frame(effect_sizes,power)
+# plot the power curve
+ggplot(plot_df, aes(x=effect_sizes,
+                    y=power, color = power))+
+  geom_point()+
+  geom_line()
+```

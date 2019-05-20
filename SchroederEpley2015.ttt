@@ -1,0 +1,17 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[tbp]
+\begin{center}
+\begin{threeparttable}
+\caption{\label{tab:rt}Descriptive statistics of intellectual ratings by presentation method.}
+\begin{tabular}{lll}
+\toprule
+CONDITION & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{SD}\\
+\midrule
+Transcript & 4.65 & 1.91\\
+Audio & 6.63 & 1.61\\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{center}
+\end{table*}
